@@ -140,11 +140,13 @@ unsafe fn scan_down(base: *const u8, bounds: &NtdllBounds) -> Option<(u16, *cons
     None
 }
 
-// 1. Direct read: if the target stub is clean, extract SSN immediately.
-// 2. Bidirectional scan: run `scan_up` and `scan_down` independently.
-// 3. Cross-validation: if both scans return a result, the computed target SSNs must agree. Disagreement means a destroyed-prologue hook caused one counter to miss a stub, making `n` incorrect.
-// If only one direction finds a clean neighbor it is used directly.
-
+/// Resolves the System Call Number (SSN) by parsing the function's assembly instructions.
+///
+/// # Safety
+///
+/// This function is unsafe because it performs raw pointer dereferencing and reads
+/// arbitrary memory addresses starting at `fn_addr` to parse bytecode signatures.
+/// The caller must ensure `fn_addr` points to a valid exported function inside NTDLL.
 pub unsafe fn resolve(fn_addr: *const c_void, bounds: &NtdllBounds) -> Option<SyscallInfo> {
     let base = fn_addr as *const u8;
 

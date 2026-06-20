@@ -1,3 +1,4 @@
+/// # Safety
 /// Core indirect syscall stub — naked, no prologue/epilogue emitted by rustc.
 ///
 /// # Argument layout on entry (Windows x64 ABI)
