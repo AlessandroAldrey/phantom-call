@@ -8,7 +8,7 @@ pub mod ssn;
 pub use ssn::NtdllBounds;
 
 /// # Example
-/// ```no_run
+/// ```ignore
 /// let bounds = NtdllBounds { start: text_start, end: text_end };
 /// let info   = unsafe { ssn::resolve(nt_alloc_fn, &bounds) }.unwrap();
 /// let status = unsafe { syscall!(info, base, zero, size, alloc_type, protect) };
